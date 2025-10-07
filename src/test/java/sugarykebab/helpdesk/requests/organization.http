@@ -1,0 +1,44 @@
+###  Login and get JWT
+POST http://localhost:8080/api/auth
+Content-Type: application/json
+
+{
+  "email": "testuser@helpdesk.com",
+  "password": "securepassword123"
+}
+
+> {% client.global.set("JWT", response.body.token) %}
+
+### Create an organization
+POST http://localhost:8080/api/organizations
+Authorization: Bearer {{JWT}}
+Content-Type: application/json
+
+{
+  "name": "Acme Corp3"
+}
+
+### Get all organization
+GET http://localhost:8080/api/organizations
+Authorization: Bearer {{JWT}}
+Accept: application/json
+
+### Update an organization
+PUT http://localhost:8080/api/organizations/c0a80103-99b8-1d9a-8199-b8de2d1e0001
+Authorization: Bearer {{JWT}}
+Content-Type: application/json
+
+{
+  "name": "Acme Global"
+}
+
+### Delete an organization
+DELETE http://localhost:8080/api/organizations/c0a80103-99b8-1d9a-8199-b8de2d1e0001
+Authorization: Bearer {{JWT}}
+Accept: application/json
+
+
+### Search Organization by name
+GET http://localhost:8080/api/organizations/search?q=Acme
+Authorization: Bearer {{JWT}}
+Accept: application/json

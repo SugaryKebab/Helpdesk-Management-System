@@ -1,0 +1,15 @@
+### Register user orgID must be provided
+POST http://localhost:8080/api/register
+Content-Type: application/json
+
+{
+  "email": "testuser1@helpdesk.com",
+  "password": "securepassword123",
+  "firstname": "Test",
+  "lastname": "User",
+  "orgID": "36eacbc4-77c9-4360-9d78-99d262ebd5be",
+  "role": "ADMIN"
+}
+
+###
+

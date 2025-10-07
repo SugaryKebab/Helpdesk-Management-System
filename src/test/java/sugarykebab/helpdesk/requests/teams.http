@@ -1,0 +1,53 @@
+###  Login and get JWT
+POST http://localhost:8080/api/auth
+Content-Type: application/json
+
+{
+  "email": "testuser@helpdesk.com",
+  "password": "securepassword123"
+}
+
+> {% client.global.set("JWT", response.body.token) %}
+
+
+### Create Team
+POST http://localhost:8080/api/teams
+Authorization: Bearer {{JWT}}
+Content-Type: application/json
+
+{
+  "name": "Support Team3"
+}
+
+### Get Teams by Org (current user)
+GET http://localhost:8080/api/teams
+Authorization: Bearer {{JWT}}
+
+### Update Team
+PUT http://localhost:8080/api/teams/{{teamId}}
+Authorization: Bearer {{JWT}}
+Content-Type: application/json
+
+{
+  "name": "Updated Support Team"
+}
+
+### Delete Team
+DELETE http://localhost:8080/api/teams/{{teamId}}
+Authorization: Bearer {{JWT}}
+
+### Add User to Team
+POST http://localhost:8080/api/teams/97bc0765-62dd-4652-87a7-58abf6a96f61/users
+Authorization: Bearer {{JWT}}
+Content-Type: application/json
+
+{
+  "userId": "c0a80103-99b3-18ce-8199-b3d9a7a90002"
+}
+
+### Remove User from Team
+DELETE http://localhost:8080/api/teams/{{teamId}}/users/{{userId}}
+Authorization: Bearer {{JWT}}
+
+
+

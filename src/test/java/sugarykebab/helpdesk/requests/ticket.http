@@ -1,0 +1,79 @@
+###  Login and get JWT
+POST http://localhost:8080/api/auth
+Content-Type: application/json
+
+{
+  "email": "testuser@helpdesk.com",
+  "password": "securepassword123"
+}
+
+> {% client.global.set("JWT", response.body.token) %}
+
+
+### Create an ticket
+POST http://localhost:8080/api/tickets
+Authorization: Bearer {{JWT}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "subject": "Issue without assignment",
+  "body": "No user or team assigned yet",
+  "statusId": 1,
+  "priorityId": 2,
+  "categoryId": null,
+  "assignedUserId": null,
+  "assignedTeamId": null,
+  "isInternal": false
+}
+
+
+
+### Get all tickets
+GET http://localhost:8080/api/tickets
+Authorization: Bearer {{JWT}}
+Accept: application/json
+
+### Get an ticket by id
+GET http://localhost:8080/api/tickets/c0a80103-99bd-153d-8199-bd4551550000
+Authorization: Bearer {{JWT}}
+Accept: application/json
+
+### Update an ticket
+PUT http://localhost:8080/api/tickets/c0a80103-99bd-153d-8199-bd4551550000
+Authorization: Bearer {{JWT}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "subject": "Issue with login [Updated]",
+  "body": "bıj issue persists after password reset",
+  "isInternal": true
+}
+
+
+### Delete an ticket
+DELETE http://localhost:8080/api/tickets/c0a80103-99bd-153d-8199-bd4551550000
+Authorization: Bearer {{JWT}}
+Accept: application/json
+
+
+### Assign ticket to user and team
+PUT http://localhost:8080/api/tickets/30f197b9-c92b-4412-b4a6-a446e31b8099/assign
+Authorization: Bearer {{JWT}}
+Content-Type: application/json
+
+{
+  "assignedUserId": "c0a80103-99b3-18ce-8199-b3d9a7a90002",
+  "assignedTeamId": "97bc0765-62dd-4652-87a7-58abf6a96f61"
+}
+
+### Unassign both
+PUT http://localhost:8080/api/tickets/30f197b9-c92b-4412-b4a6-a446e31b8099/assign
+Authorization: Bearer {{JWT}}
+Content-Type: application/json
+
+{
+  "assignedUserId": null,
+  "assignedTeamId": null
+}

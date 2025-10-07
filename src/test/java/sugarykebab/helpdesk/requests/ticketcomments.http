@@ -1,0 +1,29 @@
+###  Login and get JWT
+POST http://localhost:8080/api/auth
+Content-Type: application/json
+
+{
+  "email": "testuser@helpdesk.com",
+  "password": "securepassword123"
+}
+
+> {% client.global.set("JWT", response.body.token) %}
+
+
+### Create a new ticket comment
+POST http://localhost:8080/api/comments
+Authorization: Bearer {{JWT}}
+Content-Type: application/json
+
+{
+  "ticketId": "30f197b9-c92b-4412-b4a6-a446e31b8099",
+  "body": "This is a test comment from 2",
+  "isInternal": false
+}
+
+
+###Get all comments for a ticket
+GET localhost:8080/api/comments/30f197b9-c92b-4412-b4a6-a446e31b8099/comments
+Authorization: Bearer {{JWT}}
+
+

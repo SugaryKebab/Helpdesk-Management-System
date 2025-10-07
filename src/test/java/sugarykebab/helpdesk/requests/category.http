@@ -1,0 +1,45 @@
+###  Login and get JWT
+POST http://localhost:8080/api/auth
+Content-Type: application/json
+
+{
+  "email": "testuser@helpdesk.com",
+  "password": "securepassword123"
+}
+
+> {% client.global.set("JWT", response.body.token) %}
+
+### Create a category
+POST http://localhost:8080/api/categories
+Authorization: Bearer {{JWT}}
+Content-Type: application/json
+
+{
+  "name": "Support Team3"
+}
+
+
+### Get all categories for current org
+GET http://localhost:8080/api/categories/org
+Authorization: Bearer {{JWT}}
+
+
+### Get category by ID
+GET http://localhost:8080/api/categories/{{CATEGORY_ID}}
+Authorization: Bearer {{JWT}}
+
+
+### Update a category
+PUT http://localhost:8080/api/categories/a5aa3841-d5cd-41eb-83a4-b4a60a35c6e8
+Authorization: Bearer {{JWT}}
+Content-Type: application/json
+
+{
+  "name": "Updated Category Name"
+}
+
+
+### Delete a category
+DELETE http://localhost:8080/api/categories/a5aa3841-d5cd-41eb-83a4-b4a60a35c6e8
+Authorization: Bearer {{JWT}}
+
